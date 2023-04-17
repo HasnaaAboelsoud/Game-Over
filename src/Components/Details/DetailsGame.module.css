@@ -1,0 +1,38 @@
+.bg,
+.bg:hover
+{
+    background-color: #32383e !important;
+}
+.bgBtn,
+.bgBtn:hover{
+    background-color:#4799eb !important;
+}
+.image{
+    transition:opacity .5s;
+    cursor: pointer;
+}
+.image:hover{
+    opacity: 0;
+}
+.layout{
+    background-color: rgb(50, 56, 62,.9);
+    z-index: 2;
+}
+/* .bgDetail{
+    background-color: #272b30;
+    min-height: auto;
+} */
+/* @media (max-width: 576px){
+    .bgDetail{
+        min-height: 330vh;
+    }
+}
+@media (min-width:577px) and (max-width: 768px){
+    .bgDetail{
+        min-height: 280vh;
+    }
+} */
+.position{
+    margin-top: -400px !important;
+    z-index: 9;
+}

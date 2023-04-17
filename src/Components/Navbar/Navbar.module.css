@@ -38,3 +38,6 @@ a{
 .dropdownMenu li:hover{
     background-color: #e9ecef;
 }
+.active{
+    color: white;
+}
