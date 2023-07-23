@@ -6,24 +6,14 @@ import { UserContext } from '../Context/UserContext';
 import axios from 'axios';
 
 export default function SortBy() {
-    const {getMoreGames,visible}= useContext(UserContext);
+    const {getMoreGames,visible,getSortByGame}= useContext(UserContext);
     const [SortGames,setSortGames]= useState([]);
     const {sortParam}=useParams();
-    async function getSortByGame(){
-        const options = {
-            method: 'GET',
-            url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
-            params: {'sort-by': sortParam},
-            headers: {
-                'X-RapidAPI-Key': '0285dc1b13msheaa395fe031e303p17698ejsn418e8e23be35',
-                'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-            }
-        };
-        const {data} =await axios.request(options);
-        setSortGames(data);
+    async function getSortByGameFun(){
+        setSortGames(await getSortByGame(sortParam));
     }
     useEffect(()=>{
-        getSortByGame();
+        getSortByGameFun();
     },[sortParam])
     return (
     <div className='container pt-5'>

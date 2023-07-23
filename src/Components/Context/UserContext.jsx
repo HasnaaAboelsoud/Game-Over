@@ -38,7 +38,21 @@ export function UserContextProvider({children}){
         const {data} = await axios.request(options);
         return data;
     }
-    return <UserContext.Provider value={{visible,categories,platforms,getMoreGames,getAllGames,getGameDetails}}>
+    async function getSortByGame(sortParam){
+        console.log(sortParam)
+        const options = {
+            method: 'GET',
+            url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
+            params: {'sort-by': sortParam},
+            headers: {
+                'X-RapidAPI-Key': '0285dc1b13msheaa395fe031e303p17698ejsn418e8e23be35',
+                'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
+            }
+        };
+        const {data} =await axios.request(options);
+        return data;
+    }
+    return <UserContext.Provider value={{visible,categories,platforms,getMoreGames,getAllGames,getGameDetails,getSortByGame}}>
         {children}
     </UserContext.Provider>
 }
