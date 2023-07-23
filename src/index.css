@@ -20,16 +20,10 @@ body{
 .dropdown-item.active{
     background-color: transparent;
 }
-/* forrget Password */
-.overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999999;
-    background-color: rgba(0,0,0,.4);
-    display: flex;
+.btn-text,
+.btn-text:hover{
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
 }
 /* loading */
 .loading{

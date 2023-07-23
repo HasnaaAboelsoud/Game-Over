@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast'
 
 export default function Login({saveUserData}) {
   const navigate= useNavigate();
@@ -18,11 +19,12 @@ export default function Login({saveUserData}) {
   async function submitLogin(values){
     try {
       setloading(true);
-      const {data}= await axios.post("https://route-ecommerce.onrender.com/api/v1/auth/signin",values)
+      const {data}= await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values)
       console.log(data);
       if(data.message === "success"){
         localStorage.setItem("userToken",data.token);
         saveUserData();
+        toast("success",{className:"bg-primary text-white py-1 h6"});
         navigate("/");
         setError("");
         setloading(false);
@@ -64,19 +66,7 @@ export default function Login({saveUserData}) {
                 </form>
                 <p className='text-center mt-3 text-muted small px-2'>This site is protected by reCAPTCHA and the Google <a href="" className='text-muted'>Privacy Policy</a> and <a className='text-muted' href="">Term of Service </a>apply.</p>
               </div>
-              <a href="" className='d-block mt-2 text-center' data-bs-toggle="modal" data-bs-target="#staticBackdrop">forget a password?</a>
-              <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog ">
-                  <div className="modal-content">
-                    <div className="modal-body">
-                      <p className='text-dark p-3 fs-3 fw-bold'>sorry create new account</p>
-                    </div>
-                    <div className="modal-footer">
-                      <button type="button" className="btn  text-primary bg-transparent me-auto border-0" data-bs-dismiss="modal">ok</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Link to="/forgetpassword" className='d-block mt-2 text-center'>forget a password?</Link>
               <p className='text-center mt-2'>Not a member yet? <Link to="/register" className='text-decoration-none'>Create Account <i className="fa-solid fa-angle-right"></i></Link></p>
             </div>
           </div>

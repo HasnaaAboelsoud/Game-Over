@@ -1,10 +1,13 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const UserContext= createContext(null);
 export function UserContextProvider({children}){
-    const [categoriesArray,setCategoriesArray]= useState([])
+    const [categories,setCategories]=useState([]);
+    const [platforms,setPlatforms]=useState([]);
     const [visible,setVisible] = useState(20);
+
     function getMoreGames(){
         setVisible((prevValue)=> prevValue + 20);
     }
@@ -15,8 +18,13 @@ export function UserContextProvider({children}){
                 'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
             }
         })
+        setCategories(data.map((category)=>category.genre));
+        setPlatforms(data.map((item)=>item.platform));
         return data;
     }
+    useEffect(()=>{
+        getAllGames();
+    },[])
     async function getGameDetails(id){
         const options = {
             method: 'GET',
@@ -30,50 +38,7 @@ export function UserContextProvider({children}){
         const {data} = await axios.request(options);
         return data;
     }
-    async function getGamePlateforms(param){
-        console.log(param);
-        const options = {
-            method: 'GET',
-            url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
-            params: {platform: param},
-            headers: {
-                'X-RapidAPI-Key': '0285dc1b13msheaa395fe031e303p17698ejsn418e8e23be35',
-                'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-            }
-        };
-        const {data}=await axios.request(options);
-        return data;
-    }
-    async function getSortByGame(sortBy){
-        console.log(sortBy);
-        const options = {
-            method: 'GET',
-            url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
-            params: {'sort-by': sortBy},
-            headers: {
-                'X-RapidAPI-Key': '0285dc1b13msheaa395fe031e303p17698ejsn418e8e23be35',
-                'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-            }
-        };
-        const {data} =await axios.request(options);
-        return data;
-    }
-    async function getCategories(category){
-        console.log(category);
-        const options = {
-            method: 'GET',
-            url: 'https://free-to-play-games-database.p.rapidapi.com/api/games',
-            params: { category: category },
-            headers: {
-                'X-RapidAPI-Key': '0285dc1b13msheaa395fe031e303p17698ejsn418e8e23be35',
-                'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-            }
-        };
-
-        const {data}=await axios.request(options);
-        return data;
-    }
-    return <UserContext.Provider value={{visible,getMoreGames,getAllGames,getGameDetails,getGamePlateforms,getSortByGame,getCategories,categoriesArray,setCategoriesArray}}>
+    return <UserContext.Provider value={{visible,categories,platforms,getMoreGames,getAllGames,getGameDetails}}>
         {children}
     </UserContext.Provider>
 }

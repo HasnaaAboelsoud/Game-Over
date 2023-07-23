@@ -1,16 +1,25 @@
 import React, { useContext } from 'react'
 import logo from "../../assetsImage/logo.png";
 import style from "./Navbar.module.css"
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { UserContext } from '../Context/UserContext';
 
 export default function Navbar({userData,LogOut}) {
+    const {categories,platforms}= useContext(UserContext);
+    const set= new Set(categories);
+    const CategoriesArray= Array.from(set);
+
+    const set2=new Set(platforms);
+    const plateformsArray=Array.from(set2);
+
+    const SortArray=["release-date","popularity","alphabetical","relevance"];
     return (
             <nav className={`${style.mainNav} navbar navbar-expand-lg fixed-top mb-5`}>
             <div className="container-md">
-                <a className={`navbar-brand text-white ${style.logoText}`} href="#">
+                <Link className={`navbar-brand text-white ${style.logoText}`} to="#">
                     <img src={logo} className='logo' alt="logo"></img>
                     Game over
-                </a>
+                </Link>
                 <button className={`${style.navbarToggler} navbar-toggler border border-1 border-secondary shadow-none`} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i className="fa-solid fa-bars text-secondary"></i>
                 </button>
@@ -24,41 +33,34 @@ export default function Navbar({userData,LogOut}) {
                             <NavLink className={`${style.navlink} nav-link navlink text-decoration-none`} to="/games/all">All</NavLink>
                         </li>
                         <div className="dropdown">
-                            <a className={`text-decoration-none border-none dropdown-toggle nav-link ${style.navlink}`} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Plateforms
-                            </a>
+                            <Link className={`text-decoration-none border-none dropdown-toggle nav-link ${style.navlink}`} to="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Platforms
+                            </Link>
                             <ul className={`${style.dropdownMenu} dropdown-menu p-2`}>
-                                <li><NavLink className="dropdown-item" to="plateforms/pc">pc</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="plateforms/browser">browser</NavLink></li>
+                                {plateformsArray.slice(0,2).map((platform,index)=> <li key={index}>
+                                    <NavLink className="dropdown-item" to={`/plateforms/${platform.includes("PC")?"pc":"browser"}`}>{platform.includes("PC")?"PC":"browser"}</NavLink>
+                                </li>)}
                             </ul>
                         </div>
                         <div className="dropdown">
-                            <a className={`text-decoration-none border-none dropdown-toggle nav-link ${style.navlink}`} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <Link className={`text-decoration-none border-none dropdown-toggle nav-link ${style.navlink}`} to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Sort-by
-                            </a>
+                            </Link>
                             <ul className={`${style.dropdownMenu} dropdown-menu p-2`}>
-                                <li><NavLink className="dropdown-item" to="/sort-by/release-date">release-date</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/sort-by/popularity">popularity</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/sort-by/alphabetical">alphabetical</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/sort-by/relevance">relevance</NavLink></li>
+                                {SortArray.map((sort,index)=><li key={index}>
+                                    <NavLink className="dropdown-item" to={`/sort-by/${sort}`}>{sort}</NavLink>
+                                </li>)}
                             </ul>
                         </div> 
                         <div className="dropdown">
-                            <a className={`text-decoration-none border-none dropdown-toggle nav-link ${style.navlink}`} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <Link className={`text-decoration-none border-none dropdown-toggle nav-link ${style.navlink}`} to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Categories
-                            </a>
+                            </Link>
                             <ul className={`${style.dropdownMenu} dropdown-menu p-2`}>
-                                <li><NavLink className="dropdown-item" to="/categories/racing">racing</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/sports">sports</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/social">social</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/shooter">shooter</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/open-world">open-world</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/zombie">zombie</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/fantasy">fantasy</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/action-rpg">action-rpg</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/action">action</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/flight">flight</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/categories/battle-royale">battle-royale</NavLink></li>
+                                {CategoriesArray.map((category,index)=><li key={index}>
+                                    <NavLink className="dropdown-item" to={`/categories/${category == "Action RPG"?"action-rpg":category == "Battle Royale"?"Battle-royale":category}`}>{category}</NavLink>
+                                </li>)}
+                                    
                             </ul>
                         </div> 
                     </ul>

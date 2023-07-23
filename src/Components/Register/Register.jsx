@@ -5,6 +5,7 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 export default function Register() {
   const navigate= useNavigate();
@@ -20,10 +21,10 @@ export default function Register() {
   async function submitRegister(values){
     try {
       setloading(true);
-      const {data}= await axios.post("https://route-ecommerce.onrender.com/api/v1/auth/signup",values)
-      console.log(data);
-      if(data.message === "success"){
-        navigate("/");
+      const {data}= await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup",values);
+      if(data.message === 'success'){
+        navigate("/login");
+        toast("success",{className:"bg-primary text-white py-1 h6"});
         setError("");
         setloading(false);
       }
@@ -45,7 +46,7 @@ export default function Register() {
   });
     return (
     <>
-        <div className='container pt-5 px-2 px-lg-4 mt-lg-4 pb-5'>
+        <div className='container pt-5 mt-4 px-2 px-lg-4 mt-lg-4 pb-5'>
           <div className={`row g-0 pt-4 pt-lg-5 justify-content-center align-items-center`}>
             <div className={`col-lg-6 d-none d-lg-block ${style.image}`}>
               <div  style={{backgroundImage:`url(${img})`,backgroundSize:"100% 100%",backgroundPosition:"center",height:"100%"}}></div>
