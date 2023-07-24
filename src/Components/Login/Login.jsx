@@ -14,7 +14,7 @@ export default function Login({saveUserData}) {
   const [err,setError]=useState("")
   const schema= Yup.object({
     email:Yup.string().required("email is required").email("email invalid"),
-    password: Yup.string().required("password is required").matches(/^[A-Z][a-z]{3,}[0-9]{2,5}$/,"password not match"),
+    password: Yup.string().required("password is required").matches(/^[A-Za-z]{3,}[0-9]{2,5}$/,"Password must contain at least 3 characters and 2 numbers"),
   })
   async function submitLogin(values){
     try {

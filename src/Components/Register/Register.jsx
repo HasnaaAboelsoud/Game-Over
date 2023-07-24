@@ -14,7 +14,7 @@ export default function Register() {
   const schema= Yup.object({
     name:Yup.string().required("name is required").min(3,"minimum char is 3").max(10,"maximum char is 10"),
     email:Yup.string().required("email is required").email("email invalid"),
-    password: Yup.string().required("password is required").matches(/^[A-Z][a-z]{3,}[0-9]{2,5}$/,"password not match"),
+    password: Yup.string().required("password is required").matches(/^[A-Za-z]{3,}[0-9]{2,5}$/,"Password must contain at least 3 characters and 2 numbers"),
     rePassword: Yup.string().required("repassword is required").oneOf([Yup.ref("password")],"repawword not match"),
     phone: Yup.string().required("phone is required").matches(/^(02)?(01)[0-25][0-9]{8}$/,"phone not match")
   })

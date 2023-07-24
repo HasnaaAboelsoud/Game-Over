@@ -32,7 +32,7 @@ function App() {
   },[])
   const routes= createHashRouter([
     {path: "/",element: <Layout userData={userData} setUserData={setUserData}/>,children:[
-      {index: true,element:<ProtectedRouter><Home/></ProtectedRouter>},
+      {index: true,element:<Home/>},
       {path:"/games/all",element:<ProtectedRouter><AllGames/></ProtectedRouter>},
       {path: "/register",element:<Register/>},
       {path: "/forgetpassword",element:<ForgetPassword/>},
