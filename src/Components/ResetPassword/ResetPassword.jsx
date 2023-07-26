@@ -3,9 +3,11 @@ import { useFormik } from 'formik';
 import React from 'react'
 import { Helmet } from 'react-helmet';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 
 export default function ResetPassword() {
+    const navigate= useNavigate();
     const validationSchema= Yup.object({
         email: Yup.string().required("Email is required").email("Email is invalid"),
         newPassword: Yup.string().required("new password is required").matches(/^[A-Z][a-z0-9]{5,10}$/,"new password must start with capital letter"),
